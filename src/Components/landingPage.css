@@ -21,3 +21,37 @@
     margin-bottom: 1%;
     cursor: pointer;
 }
+.deleteBtn{
+    padding: 10px 20px;
+    background-color: #f80046;
+    color: white;
+    border: none;
+    font-size: large;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+table{
+    width: 95%;
+    /* padding: 3%; */
+    /* border: 1px solid black; */
+}
+th{
+    /* padding: 3%; */
+    /* border: 1px solid black; */
+
+}
+td{
+    /* padding: 3%; */
+    width: 30%;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+.updateBtn{
+    padding: 5px 10px;
+    border: 2px solid #00cef0 ;
+    background-color: white;
+    margin: 3%;
+    cursor: pointer;
+}
