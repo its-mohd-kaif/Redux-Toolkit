@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import "./landingPage.css";
 import { add, update, deleteCart } from "../redux/cartSlice";
 import { fetchProducts } from "../redux/productSlice";
+import { deleteProducts } from "../redux/deleteSlice";
+import { updateProducts } from "../redux/updateSlice";
+import { addProducts } from "../redux/addSlice";
 
 function LandingPage() {
   const [id, setId] = useState(0);
@@ -13,8 +16,11 @@ function LandingPage() {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.cart);
   const products = useSelector((state) => state.product.users.carts);
+  const deleteProduct = useSelector((state) => state.delete);
+  const updateProduct = useSelector((state) => state.update);
+  const addProduct = useSelector((state) => state.add);
   console.log("LIST", list);
-  console.log("Products", products);
+  // console.log("Products", products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -28,68 +34,48 @@ function LandingPage() {
   };
 
   const addToCartHandler = () => {
-    // if (input === "") {
-    //   alert("Please Type Something...");
-    //   document.getElementById("input").focus();
-    // } else {
-    // Call dispatch and pass add todo started method
-    // dispatch(add_todo_started());
-    fetch("https://dummyjson.com/carts/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        // id: id,
-        // quantity: quantity,
-        userId: 1,
-        products: [
-          {
-            id: id,
-            quantity: quantity,
-          },
-        ],
-      }),
-    })
-      .then((res) => res.json())
-      .then((val) => {
-        // Call dispatch and pass add todo success
-        console.log("ADD", val);
-        dispatch(dispatch(add(val)));
-      })
-      .catch((err) => {
-        // Call dispatch and pass add todo failure
-        // dispatch(add_todo_failure(err.message));
-      });
-
-    // setInput("");
-    // }
+    // fetch("https://dummyjson.com/carts/add", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     userId: 1,
+    //     products: [
+    //       {
+    //         id: id,
+    //         quantity: quantity,
+    //       },
+    //     ],
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((val) => {
+    //     console.log("ADD", val);
+    //     dispatch(dispatch(add(val)));
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //   });
 
     let obj = {
       id: id,
       quantity: quantity,
     };
-    dispatch(add(obj));
+    dispatch(addProducts(id,quantity));
+    console.log("ADD PRODUCT", addProduct);
   };
 
   const deleteCartHandler = () => {
-    dispatch(deleteCart());
-    fetch("https://dummyjson.com/carts/1")
-      .then((response) => response.json())
-      .then((val) => {
-        console.log(val);
-        alert(JSON.stringify(val));
-        setDel(val);
-      });
+    dispatch(deleteProducts());
+    console.log("Delete Product", deleteProduct);
   };
 
   const updateHandler = () => {
-    dispatch(update());
-    fetch("https://dummyjson.com/carts/1")
-      .then((response) => response.json())
-      .then((val) => {
-        console.log(val);
-        alert(JSON.stringify(val));
-        setDel(val);
-      });
+    let obj = {
+      id: id,
+      quantity: quantity,
+    };
+    dispatch(updateProducts(obj));
+    console.log("Update", updateProduct);
   };
 
   return (
@@ -153,7 +139,7 @@ function LandingPage() {
                           <tr>
                             <td>{index + 1}</td>
                             <td>{val.title}</td>
-                            <td>{val.quantity}</td>
+                            <td><input value={val.quantity}/></td>
                             <td>
                               <button
                                 onClick={updateHandler}
