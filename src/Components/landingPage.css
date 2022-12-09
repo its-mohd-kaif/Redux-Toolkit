@@ -1,57 +1,96 @@
-.containerDiv{
-    width: 45%;
-    margin-left: 24%;
-    padding: 3%;
+.containerDiv {
+  width: 45%;
+  margin-left: 24%;
+  padding: 3%;
 }
-.inputBox{
-    width: 97%;
-    padding: 1%;
-    font-size: large;
-    margin-top: 1%;
-    margin-bottom: 1%;
-}
-.addCartBtn{
-    background-color: #00cef0;
-    color: black;
-    padding: 10px 20px;
-    font-size: large;
-    border: none;
-    border-radius: 10px;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    cursor: pointer;
-}
-.deleteBtn{
-    padding: 10px 20px;
-    background-color: #f80046;
-    color: white;
-    border: none;
-    font-size: large;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 1%;
-    margin-bottom: 3%;
-}
-table{
-    width: 95%;
-    /* padding: 3%; */
-    /* border: 1px solid black; */
-}
-th{
-    /* padding: 3%; */
-    /* border: 1px solid black; */
 
+.inputBox {
+  width: 97%;
+  padding: 1%;
+  font-size: large;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
-td{
-    /* padding: 3%; */
-    width: 30%;
-    text-align: center;
-    /* border: 1px solid black; */
+
+.addCartBtn {
+  background-color: #00cef0;
+  color: black;
+  padding: 10px 20px;
+  font-size: large;
+  border: none;
+  border-radius: 10px;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  cursor: pointer;
 }
-.updateBtn{
-    padding: 5px 10px;
-    border: 2px solid #00cef0 ;
-    background-color: white;
-    margin: 3%;
-    cursor: pointer;
+
+.deleteBtn {
+  padding: 10px 20px;
+  background-color: #f80046;
+  color: white;
+  border: none;
+  font-size: large;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1%;
+  margin-bottom: 3%;
+}
+
+table {
+  width: 95%;
+}
+
+td {
+  width: 30%;
+  text-align: center;
+}
+
+.updateBtn {
+  padding: 5px 10px;
+  border: 2px solid #00cef0;
+  background-color: white;
+  margin: 3%;
+  cursor: pointer;
+}
+
+.success {
+  padding: 20px;
+  background-color: #2eb885;
+  color: white;
+}
+.error {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.hideSuccess {
+  display: none;
+}
+
+.visibleSuccess {
+  display: block;
+}
+
+.hideError {
+  display: none;
+}
+
+.visibleError {
+  display: block;
 }

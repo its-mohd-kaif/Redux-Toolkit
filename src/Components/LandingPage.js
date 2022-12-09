@@ -1,81 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./landingPage.css";
-import { add, update, deleteCart } from "../redux/cartSlice";
-import { fetchProducts } from "../redux/productSlice";
-import { deleteProducts } from "../redux/deleteSlice";
-import { updateProducts } from "../redux/updateSlice";
-import { addProducts } from "../redux/addSlice";
+import { fetchProducts } from "../redux/reduxSlice";
+import { addProducts } from "../redux/reduxSlice";
+import { updateProducts } from "../redux/reduxSlice";
+import { deleteProducts } from "../redux/reduxSlice";
 
 function LandingPage() {
+  // UseState For Input Values
   const [id, setId] = useState(0);
   const [quantity, setQuantity] = useState(0);
-
-  const [del, setDel] = useState("");
-
+  // UseState For Alert Message
+  const [success, setSuccess] = useState("hideSuccess");
+  const [error, setError] = useState("hideError");
+  // UseDispatch
   const dispatch = useDispatch();
-  const list = useSelector((state) => state.cart);
-  const products = useSelector((state) => state.product.users.carts);
-  const deleteProduct = useSelector((state) => state.delete);
-  const updateProduct = useSelector((state) => state.update);
-  const addProduct = useSelector((state) => state.add);
-  console.log("LIST", list);
-  // console.log("Products", products);
+  // UseSelect For State Value
+  const products = useSelector((state) => state.product.items.carts);
+  const deleteProduct = useSelector((state) => state.product);
+  const updateProduct = useSelector((state) => state.product.values);
+  const addProduct = useSelector((state) => state.product);
 
   useEffect(() => {
+    // /dispatch Action
     dispatch(fetchProducts());
+    dispatch(deleteProducts());
+    dispatch(updateProducts());
   }, []);
 
+  //Id Input Box Handler
   const idHandler = (e) => {
     setId(e.target.value);
   };
+  // Quantity Input Box Handler
   const quantityHandler = (e) => {
     setQuantity(e.target.value);
   };
-
+  // Add To Cart Function
   const addToCartHandler = () => {
-    // fetch("https://dummyjson.com/carts/add", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     userId: 1,
-    //     products: [
-    //       {
-    //         id: id,
-    //         quantity: quantity,
-    //       },
-    //     ],
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((val) => {
-    //     console.log("ADD", val);
-    //     dispatch(dispatch(add(val)));
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
-
-    let obj = {
-      id: id,
-      quantity: quantity,
-    };
-    dispatch(addProducts(id,quantity));
-    console.log("ADD PRODUCT", addProduct);
+    dispatch(addProducts({ id: id, quantity: quantity }));
+    // Check Validation
+    if (addProduct.error !== "" || id === 0 || quantity === 0) {
+      setSuccess("hideSuccess");
+      setError("visibleError");
+    } else if (addProduct.error === "" && (id !== 0 || quantity !== 0)) {
+      setSuccess("visibleSuccess");
+      setError("hideError");
+    }
   };
-
+  // Delete Cart Function
   const deleteCartHandler = () => {
-    dispatch(deleteProducts());
-    console.log("Delete Product", deleteProduct);
+    alert(JSON.stringify(deleteProduct.remove));
   };
-
+  // Update Cart Function
   const updateHandler = () => {
-    let obj = {
-      id: id,
-      quantity: quantity,
-    };
-    dispatch(updateProducts(obj));
-    console.log("Update", updateProduct);
+    alert(JSON.stringify(updateProduct));
+  };
+  // Popup Alert Hide Function
+  const hidePopupSuccess = () => {
+    setSuccess("hideSuccess");
+  };
+  // Popup Alert Hide Function
+  const hidePopupError = () => {
+    setError("hideError");
   };
 
   return (
@@ -110,6 +97,24 @@ function LandingPage() {
             </button>
             <hr></hr>
             <br></br>
+            <div className="alertMessage">
+              <div className={success}>
+                <div className="success">
+                  <span className="closebtn" onClick={hidePopupSuccess}>
+                    &times;
+                  </span>
+                  <strong>Success!</strong> items added successfully
+                </div>
+              </div>
+              <div className={error}>
+                <div className="error">
+                  <span className="closebtn" onClick={hidePopupError}>
+                    &times;
+                  </span>
+                  <strong>Error!</strong> Error in adding to cart
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <center>
@@ -135,11 +140,13 @@ function LandingPage() {
                 {products
                   ? products[0].products.map((val, index) => (
                       <>
-                        <tbody key={val.id}>
+                        <tbody key={index}>
                           <tr>
                             <td>{index + 1}</td>
                             <td>{val.title}</td>
-                            <td><input value={val.quantity}/></td>
+                            <td>
+                              <input value={val.quantity} />
+                            </td>
                             <td>
                               <button
                                 onClick={updateHandler}
